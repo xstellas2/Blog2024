@@ -5,6 +5,7 @@ from .models import Modalidade, Curso, Aluno
 def index(request):
     cursos = Curso.objects.all() # Select do django
     contexto = {
-        'cursos': cursos,
+        'lista': cursos,
     }
     return render(request, 'curso/index.html',contexto)
+

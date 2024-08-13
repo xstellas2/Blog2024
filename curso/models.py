@@ -13,6 +13,7 @@ class Curso(models.Model):
     vagas = models.IntegerField()
     inscritos = models.IntegerField()
     modalidade = models.ForeignKey(Modalidade, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='cursos/', null=True, blank=True)
 
     def __str__(self):
         return self.nome
