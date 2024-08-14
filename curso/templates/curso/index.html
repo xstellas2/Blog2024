@@ -48,7 +48,7 @@
                                 <p class="card-text">Vagas: {{ c.vagas }}</p>
                                 <p class="card-text">Inscritos: {{ c.inscritos }}</p>
                                 <p class="card-text">Modalidade: {{ c.modalidade }}</p>
-                                <a href="#" class="btn btn-primary">Ver mais detalhes</a>
+                                <a href="{% url 'curso_detail' c.id  %}" class="btn btn-primary">Ver mais detalhes</a>
                             </div>
                         </div>
                     </div>

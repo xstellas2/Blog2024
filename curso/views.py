@@ -9,3 +9,10 @@ def index(request):
     }
     return render(request, 'curso/index.html',contexto)
 
+
+def details(request, curso_id):
+    curso = Curso.objects.get(id=curso_id)
+    contexto = {
+        'curso': curso,
+    }
+    return render(request, 'curso/detalhe_curso.html',contexto)

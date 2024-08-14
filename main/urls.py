@@ -16,13 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from curso import views
 from django.conf import settings
 from django.conf.urls.static import static
+from curso import views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.index,name='index'),
+    path('curso/<int:curso_id>/', views.details, name='curso_detail'),
+
 ]
 
 if settings.DEBUG:
