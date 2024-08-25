@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Modalidade, Curso, Aluno
 from django.utils.html import format_html
+   
 
 # Register your models here.
 
@@ -11,8 +12,15 @@ class ModalidadeAdmin(admin.ModelAdmin):
 @admin.register(Curso)
 class CursoAdmin(admin.ModelAdmin):
 
+
     def image_tag(self, obj):
-        return format_html('<img src="{}" style="max-width:200px; max-height:200px"/>'.format(obj.image.url))
+        if obj.image and hasattr(obj.image, 'url'):
+            return format_html('<img src="{}" style="max-width:200px; max-height:200px"/>'.format(obj.image.url))
+        else:
+            # Usando um placeholder de 200x200 pixels
+            placeholder_url = "https://via.placeholder.com/200"
+            return format_html('<img src="{}" style="max-width:200px; max-height:200px"/>'.format(placeholder_url))
+
 
     image_tag.short_description = 'Image'
     list_display = ['nome', 'modalidade', 'vagas', 'inscritos','image_tag']
