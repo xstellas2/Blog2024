@@ -28,11 +28,3 @@ class Aluno(models.Model):
         return self.nome    
     
 
-
-class Noticia(models.Model):
-    titulo = models.CharField(max_length=100)
-    data_nascimento = models.DateField()
-    curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
-    def __str__(self):
-        return self.nome    
-        

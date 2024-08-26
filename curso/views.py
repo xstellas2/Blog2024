@@ -19,9 +19,6 @@ def detalhe_curso(request, curso_id):
     }
     return render(request, 'curso/detalhe_curso.html',contexto)
 
-def pagina_noticia(request):
-    return render(request, 'curso/noticia.html')
-
 def pagina_sobre(request):
     return render(request, 'curso/sobre.html')
 
