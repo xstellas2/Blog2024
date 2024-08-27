@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block parte_central %}
+    <h1>Estudo Formulários</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </form>    
+{% endblock %}
