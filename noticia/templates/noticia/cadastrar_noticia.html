@@ -2,9 +2,10 @@
 
 {% block parte_central %}
     <h2>Cadastrar Notícia</h2>
-    <form method="POST">
+ 
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Cadastrar</button>
-    </form>
+    </form>    
 {% endblock %}

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Noticia
 from .forms import NoticiaForm
 
@@ -12,8 +12,16 @@ def lista_noticia(request):
 
 
 def cadastrar_noticias(request):
-    form = NoticiaForm()
-    contexto={
+    if request.method == 'POST':
+        form = NoticiaForm(request.POST, request.FILES) 
+        if form.is_valid():
+            form.save() 
+            return redirect('cadastro_sucesso')  
+    else:
+        form = NoticiaForm()
+
+    contexto = {
         'form': form
     }
-    return render(request, 'noticia/cadastrar_noticia.html',contexto)
+    return render(request, 'noticia/cadastrar_noticia.html', contexto)
+
