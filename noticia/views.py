@@ -3,12 +3,12 @@ from .models import Noticia
 from .forms import NoticiaForm
 
 # Create your views here.
-def lista_noticia(request):
+def index(request):
     noticias = Noticia.objects.all()
     contexto={
         'noticias': noticias
     }
-    return render(request, 'noticia/lista_noticias.html',contexto)
+    return render(request, 'noticia/index.html',contexto)
 
 
 def cadastrar_noticias(request):
