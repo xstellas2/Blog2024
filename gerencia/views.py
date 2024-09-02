@@ -13,6 +13,7 @@ def listagem_noticia(request):
     }
     return render(request, 'gerencia/listagem_noticia.html',contexto)
 
+
 def cadastro_noticia(request):
     
     if request.method == 'POST':
@@ -22,6 +23,21 @@ def cadastro_noticia(request):
             return redirect('gerencia:listagem_noticia')
     else: 
         form = NoticiaForm()
+    
+    contexto = {
+        'form': form
+    }
+    return render(request, 'gerencia/cadastro_noticia.html',contexto)
+
+def editar_noticia(request, id):
+    noticia = Noticia.objects.get(id=id)
+    if request.method == 'POST':
+        form = NoticiaForm(request.POST, request.FILES, instance=noticia)
+        if form.is_valid():
+            form.save()
+            return redirect('gerencia:listagem_noticia')
+    else:
+        form = NoticiaForm(instance=noticia)
     
     contexto = {
         'form': form
