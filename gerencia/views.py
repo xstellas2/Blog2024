@@ -1,8 +1,10 @@
 from django.shortcuts import render,redirect
 from noticia.models import Noticia
 from noticia.forms import NoticiaForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required
 def inicio_gerencia(request):
     return render(request, 'gerencia/inicio.html')
 

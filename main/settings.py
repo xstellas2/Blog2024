@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'curso',
     'noticia',
     'gerencia',
+    'usuarios',
 ]
 
 MIDDLEWARE = [
@@ -131,4 +132,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-AUTH_USER_MODEL = 'gerencia.UserBlog'
+AUTH_USER_MODEL = 'usuarios.UserBlog'
+
+# settings.py
+LOGIN_URL = 'usuarios:login'  # URL correta para o login
+LOGOUT_REDIRECT_URL = 'usuarios:login'  # Redirecionar para login após logout
