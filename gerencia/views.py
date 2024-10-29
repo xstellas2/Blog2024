@@ -2,10 +2,14 @@ from django.shortcuts import render,redirect
 from noticia.models import Noticia
 from noticia.forms import NoticiaForm
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
 
 # Create your views here.
 @login_required
 def inicio_gerencia(request):
+    if not request.user.groups.filter(name='Moderadores').exists():
+        return HttpResponseForbidden("Acesso negado. Você não tem permissão para acessar esta função.")
+
     return render(request, 'gerencia/inicio.html')
 
 def listagem_noticia(request):
@@ -31,6 +35,7 @@ def cadastro_noticia(request):
     }
     return render(request, 'gerencia/cadastro_noticia.html',contexto)
 
+@login_required
 def editar_noticia(request, id):
     noticia = Noticia.objects.get(id=id)
     if request.method == 'POST':
