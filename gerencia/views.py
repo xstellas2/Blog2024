@@ -7,9 +7,6 @@ from django.http import HttpResponseForbidden
 # Create your views here.
 @login_required
 def inicio_gerencia(request):
-    if not request.user.groups.filter(name='Moderadores').exists():
-        return HttpResponseForbidden("Acesso negado. Você não tem permissão para acessar esta função.")
-
     return render(request, 'gerencia/inicio.html')
 
 def listagem_noticia(request):
