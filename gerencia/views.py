@@ -40,7 +40,7 @@ def editar_noticia(request, id):
         form = NoticiaForm(request.POST, request.FILES, instance=noticia)
         if form.is_valid():
             noticia_editada = form.save(commit=False)  # Não salva ainda
-            noticia_editada.usuario = noticia.usuario  # Mantém o autor original
+            noticia_editada.usuario = request.user 
             noticia_editada.save()  # Salva com o usuário intacto
             return redirect('gerencia:listagem_noticia')
     else:
