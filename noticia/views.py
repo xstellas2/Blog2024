@@ -1,14 +1,14 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render,redirect
 from .models import Noticia
 from .forms import NoticiaForm
 
 # Create your views here.
-def lista_noticia(request):
+def index(request):
     noticias = Noticia.objects.all()
     contexto={
         'noticias': noticias
     }
-    return render(request, 'noticia/lista_noticias.html',contexto)
+    return render(request, 'noticia/index.html',contexto)
 
 def pre_cadastro_noticia(request):
     
@@ -21,8 +21,17 @@ def pre_cadastro_noticia(request):
     else:
         form = NoticiaForm()
 
+def cadastrar_noticias(request):
+    if request.method == 'POST':
+        form = NoticiaForm(request.POST, request.FILES) 
+        if form.is_valid():
+            form.save() 
+            return redirect('cadastro_sucesso')  
+    else:
+        form = NoticiaForm()
+
     contexto = {
         'form': form
     }
-    return render(request, 'noticia/cadastro_noticia.html',contexto)
+    return render(request, 'noticia/cadastrar_noticia.html', contexto)
 
