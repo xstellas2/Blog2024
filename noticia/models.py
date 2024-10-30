@@ -1,6 +1,6 @@
 from django.db import models
+from usuarios.models import UserBlog
 
-# Create your models here.
 class Categoria(models.Model):
     nome = models.CharField(max_length=100)
     
@@ -14,6 +14,7 @@ class Noticia(models.Model):
     image = models.ImageField(upload_to='noticias/')
     autor = models.CharField(max_length=100)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    usuario = models.ForeignKey( UserBlog, on_delete=models.CASCADE, blank=True,null=True)  
     
 
         

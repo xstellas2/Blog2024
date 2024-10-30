@@ -10,27 +10,28 @@ def inicio_gerencia(request):
     return render(request, 'gerencia/inicio.html')
 
 def listagem_noticia(request):
-    noticias = Noticia.objects.all()
+    
+    noticias = Noticia.objects.filter(usuario=request.user)  # Filtra pelo usuário logado
+
     contexto = {
         'noticias': noticias
     }
     return render(request, 'gerencia/listagem_noticia.html',contexto)
 
 
-def cadastro_noticia(request):
-    
+def cadastrar_noticia(request):
     if request.method == 'POST':
-        form = NoticiaForm(request.POST, request.FILES) 
+        form = NoticiaForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save() 
-            return redirect('gerencia:listagem_noticia')
-    else: 
-        form = NoticiaForm()
-    
-    contexto = {
-        'form': form
-    }
-    return render(request, 'gerencia/cadastro_noticia.html',contexto)
+            noticia = form.save(commit=False)  # Cria instância sem salvar
+            noticia.usuario = request.user  # Atribui o autor (usuário logado)
+            noticia.save()  # Salva a notícia no banco
+            return redirect('gerencia:listagem_noticia')  # Redireciona para página de sucesso
+    else:
+        form = NoticiaForm() 
+
+    contexto = {'form': form}
+    return render(request, 'gerencia/cadastro_noticia.html', contexto)
 
 @login_required
 def editar_noticia(request, id):
@@ -38,7 +39,9 @@ def editar_noticia(request, id):
     if request.method == 'POST':
         form = NoticiaForm(request.POST, request.FILES, instance=noticia)
         if form.is_valid():
-            form.save()
+            noticia_editada = form.save(commit=False)  # Não salva ainda
+            noticia_editada.usuario = noticia.usuario  # Mantém o autor original
+            noticia_editada.save()  # Salva com o usuário intacto
             return redirect('gerencia:listagem_noticia')
     else:
         form = NoticiaForm(instance=noticia)
