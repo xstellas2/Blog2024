@@ -1,6 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import UserBlogCreationForm
 
 def login_view(request):
     if request.method == 'POST':
@@ -21,3 +24,17 @@ def login_view(request):
 def logout_view(request):
     logout(request) 
     return redirect('usuarios:login')  
+
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserBlogCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Cadastro realizado com sucesso! Você já pode fazer login.')
+            return redirect('usuarios:login')  
+    else:
+        form = UserBlogCreationForm()
+
+    return render(request, 'usuarios/register.html', {'form': form})
