@@ -77,12 +77,4 @@ Abra o navegador e acesse [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
 ---
 
-## **Passo 7: Finalizar o ambiente virtual**
-
-Quando terminar de trabalhar no projeto, desative o ambiente virtual com:
-```bash
-deactivate
-```
-
----
 
