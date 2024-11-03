@@ -51,14 +51,23 @@ def editar_noticia(request, id):
     return render(request, 'gerencia/cadastro_noticia.html',contexto)
 
 
-# Create your views here.
+# views.py
+from django.shortcuts import render
+from .models import Noticia, Categoria
+
 def index(request):
     categoria_nome = request.GET.get('categoria')  # Obtém o parâmetro 'categoria' da URL
+    search_query = request.GET.get('search')  # Obtém o parâmetro de busca
+
+    # Filtra as notícias com base na categoria ou na busca
+    noticias = Noticia.objects.all()
     if categoria_nome:
-        categoria = Categoria.objects.filter(nome=categoria_nome).first()  # Obtém o primeiro objeto correspondente
-        noticias = Noticia.objects.filter(categoria=categoria) if categoria else Noticia.objects.none()
-    else:
-        noticias = Noticia.objects.all()  # Exibe todas as notícias se nenhuma categoria for selecionada
+        categoria = Categoria.objects.filter(nome=categoria_nome).first()
+        if categoria:
+            noticias = noticias.filter(categoria=categoria)
+
+    if search_query:
+        noticias = noticias.filter(titulo__icontains=search_query)  # Filtra por título, ignorando maiúsculas/minúsculas
 
     categorias = Categoria.objects.all()  # Pega todas as categorias para exibir no template
 
@@ -66,5 +75,6 @@ def index(request):
         'noticias': noticias,
         'categorias': categorias,
         'categoria_selecionada': categoria_nome,
+        'search_query': search_query,
     }
     return render(request, 'gerencia/index.html', contexto)
