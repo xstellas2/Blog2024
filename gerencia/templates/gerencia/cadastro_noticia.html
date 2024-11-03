@@ -40,10 +40,9 @@
             <div class="form-group">
                 <label for="id_image">Imagem</label>
                 {{ form.image }}
-            </div>
-            <div class="form-group">
-                <label for="id_autor">Autor</label>
-                {{ form.autor }}
+                {% if form.image.value %}
+                    <img src="{{ form.image.value.url }}" alt="Imagem Atual" style="max-width: 200px; margin-top: 10px;">
+                {% endif %}
             </div>
             <div class="form-group">
                 <label for="id_categoria">Categoria</label>

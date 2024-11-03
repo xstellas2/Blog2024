@@ -19,9 +19,10 @@ from django.urls import path, include
 from curso import views
 from django.conf import settings
 from django.conf.urls.static import static
+from gerencia.views import index
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('noticia.urls')),
+    path('',index,name='index' ), # index
     path('usuario/',include('usuarios.urls')),
     path('gerencia/',include('gerencia.urls')),
     path('curso/<int:curso_id>',views.detalhe_curso,name='detalhe_curso'),

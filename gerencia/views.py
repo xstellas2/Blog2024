@@ -1,8 +1,7 @@
 from django.shortcuts import render,redirect
-from noticia.models import Noticia
-from noticia.forms import NoticiaForm
+from .models import Noticia,Categoria
+from .forms import NoticiaForm
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden
 
 # Create your views here.
 @login_required
@@ -50,3 +49,22 @@ def editar_noticia(request, id):
         'form': form
     }
     return render(request, 'gerencia/cadastro_noticia.html',contexto)
+
+
+# Create your views here.
+def index(request):
+    categoria_nome = request.GET.get('categoria')  # Obtém o parâmetro 'categoria' da URL
+    if categoria_nome:
+        categoria = Categoria.objects.filter(nome=categoria_nome).first()  # Obtém o primeiro objeto correspondente
+        noticias = Noticia.objects.filter(categoria=categoria) if categoria else Noticia.objects.none()
+    else:
+        noticias = Noticia.objects.all()  # Exibe todas as notícias se nenhuma categoria for selecionada
+
+    categorias = Categoria.objects.all()  # Pega todas as categorias para exibir no template
+
+    contexto = {
+        'noticias': noticias,
+        'categorias': categorias,
+        'categoria_selecionada': categoria_nome,
+    }
+    return render(request, 'gerencia/index.html', contexto)
