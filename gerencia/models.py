@@ -15,3 +15,5 @@ class Noticia(models.Model):
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     usuario = models.ForeignKey( UserBlog, on_delete=models.CASCADE, blank=True,null=True)  
     
+
+    

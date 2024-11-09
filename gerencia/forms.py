@@ -14,3 +14,34 @@ class NoticiaForm(forms.ModelForm):
             'categoria': forms.Select(attrs={'class': 'form-control'}),
 
         }
+
+
+
+from django import forms
+from .models import Categoria
+from usuarios.models import UserBlog  # Importe o modelo de usuário personalizado
+
+class NoticiaFilterForm(forms.Form):
+    titulo = forms.CharField(
+        max_length=200,
+        required=False,
+        label='Título',
+        widget=forms.TextInput(attrs={'placeholder': 'Digite o título','class': 'form-control'})
+    )
+    data_publicacao_inicio = forms.DateField(
+        required=False,
+        label='Data de Publicação (Início)',
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'})
+    )
+    data_publicacao_fim = forms.DateField(
+        required=False,
+        label='Data de Publicação (Fim)',
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'})
+    )
+    categoria = forms.ModelChoiceField(
+        queryset=Categoria.objects.all(),
+        required=False,
+        label='Categoria',
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+  

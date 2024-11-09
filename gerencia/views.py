@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect
-from .models import Noticia,Categoria
-from .forms import NoticiaForm
+from .forms import NoticiaForm, NoticiaFilterForm
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from .models import Noticia, Categoria
 
 # Create your views here.
 @login_required
@@ -9,11 +10,23 @@ def inicio_gerencia(request):
     return render(request, 'gerencia/inicio.html')
 
 def listagem_noticia(request):
+    formularioFiltro = NoticiaFilterForm(request.GET or None)
     
     noticias = Noticia.objects.filter(usuario=request.user)  # Filtra pelo usuário logado
 
+    if formularioFiltro.is_valid():
+        if formularioFiltro.cleaned_data['titulo']:
+            noticias = noticias.filter(titulo__icontains=formularioFiltro.cleaned_data['titulo'])
+        if formularioFiltro.cleaned_data['data_publicacao_inicio']:
+            noticias = noticias.filter(data_publicacao__gte=formularioFiltro.cleaned_data['data_publicacao_inicio'])
+        if formularioFiltro.cleaned_data['data_publicacao_fim']:
+            noticias = noticias.filter(data_publicacao__lte=formularioFiltro.cleaned_data['data_publicacao_fim'])
+        if formularioFiltro.cleaned_data['categoria']:
+            noticias = noticias.filter(categoria=formularioFiltro.cleaned_data['categoria'])
+    
     contexto = {
-        'noticias': noticias
+        'noticias': noticias,
+        'formularioFiltro': formularioFiltro
     }
     return render(request, 'gerencia/listagem_noticia.html',contexto)
 
@@ -51,9 +64,7 @@ def editar_noticia(request, id):
     return render(request, 'gerencia/cadastro_noticia.html',contexto)
 
 
-# views.py
-from django.shortcuts import render
-from .models import Noticia, Categoria
+
 
 def index(request):
     categoria_nome = request.GET.get('categoria')  # Obtém o parâmetro 'categoria' da URL
