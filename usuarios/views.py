@@ -45,13 +45,12 @@ def register(request):
 
 def lista_usuarios(request):
     usuarios_lista = UserBlog.objects.all().order_by('username')
-    paginator = Paginator(usuarios_lista, 10)  # 10 usuários por página
+    paginator = Paginator(usuarios_lista, 5)  # 10 usuários por página
     
     page = request.GET.get('page', 1)
-    try:
-        usuarios = paginator.page(page)
-    except:
-        usuarios = paginator.page(1)
+    
+    usuarios = paginator.page(page)
+   
     
     return render(request, 'usuarios/lista_usuario.html', {
         'usuarios': usuarios
