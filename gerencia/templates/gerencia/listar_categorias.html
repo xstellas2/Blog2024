@@ -1,6 +1,9 @@
-{% extends 'base_gerencia.html' %} {% block main %}
+{% extends 'base_gerencia.html' %} 
+{% block main %}
+
 <h2>Listar Categorias</h2>
-<form method="GET" action="{% url 'gerencia:listar_categorias' %}">
+
+<form method="GET" action="{% url 'gerencia:listagem_categorias' %}">
   <input
     type="text"
     name="search"
@@ -9,12 +12,14 @@
   />
   <button type="submit">Buscar</button>
 </form>
+
 <a href="{% url 'gerencia:criar_categoria' %}">Criar Categoria</a>
+
 <ul>
   {% for categoria in page_obj %}
   <li>
     {{ categoria.nome }} -
-    <a href="{% url 'gerencia:editar_categoria' categoria.id %}">Editar</a> -
+    <a href="{% url 'gerencia:edicao_categoria' categoria.id %}">edicao_noticia</a> -
     <a href="{% url 'gerencia:deletar_categoria' categoria.id %}">Deletar</a>
   </li>
   {% endfor %}
@@ -45,6 +50,7 @@
       href="?page={{ page_obj.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}"
       >last &raquo;</a
     >
+
     {% endif %}
   </span>
 </div>

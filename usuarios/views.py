@@ -75,7 +75,7 @@ def cadastrar_usuario(request):
 
 
 @login_required
-def editar_usuario(request, id):
+def edicao_noticia_usuario(request, id):
     usuario = get_object_or_404(UserBlog, id=id)
     
     if request.method == 'POST':

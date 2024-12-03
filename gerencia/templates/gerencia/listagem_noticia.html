@@ -4,7 +4,7 @@
 
      <!-- Page Heading -->
      <h1 class="h3 mb-2 text-gray-800">Gerenciar Notícias</h1>
-     <p class="mb-4">Aqui você pode editar ou remover as notícias existentes.</p>
+     <p class="mb-4">Aqui você pode edicao_noticia ou remover as notícias existentes.</p>
 
      <!-- Filtro de Notícias -->
      <div class="card shadow mb-4">
@@ -65,7 +65,7 @@
                              <td>{{ noticia.texto|truncatechars:100 }}</td>
                              <td>{{ noticia.data_publicacao|date:"d/m/Y" }}</td>
                              <td>
-                                 <a href="{% url 'gerencia:editar_noticia' noticia.id %}" class="btn btn-warning btn-sm">Editar</a>
+                                 <a href="{% url 'gerencia:edicao_noticia' noticia.id %}" class="btn btn-warning btn-sm">edicao_noticia</a>
                                  <form action="#" method="POST" style="display:inline;">
                                      {% csrf_token %}
                                      <button type="submit" class="btn btn-danger btn-sm">Remover</button>

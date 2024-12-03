@@ -32,7 +32,7 @@ def listagem_noticia(request):
     return render(request, 'gerencia/listagem_noticia.html',contexto)
 
 
-def cadastrar_noticia(request):
+def cadastro_noticia(request):
     if request.method == 'POST':
         form = NoticiaForm(request.POST, request.FILES)
         if form.is_valid():
@@ -47,7 +47,7 @@ def cadastrar_noticia(request):
     return render(request, 'gerencia/cadastro_noticia.html', contexto)
 
 @login_required
-def editar_noticia(request, id):
+def edicao_noticia(request, id):
     noticia = Noticia.objects.get(id=id)
     if request.method == 'POST':
         form = NoticiaForm(request.POST, request.FILES, instance=noticia)
@@ -93,7 +93,7 @@ def index(request):
 
 
 @login_required
-def listar_categorias(request):
+def listagem_categorias(request):
     search_query = request.GET.get('search', '')
 
     if search_query:
@@ -109,7 +109,7 @@ def listar_categorias(request):
         'page_obj': page_obj,
         'search_query': search_query,
     }
-    return render(request, 'gerencia/listar_categorias.html', contexto)
+    return render(request, 'gerencia/listagem_categorias.html', contexto)
 
     
 @login_required
@@ -118,27 +118,27 @@ def criar_categoria(request):
         form = CategoriaForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('gerencia:listar_categorias')
+            return redirect('gerencia:listagem_categorias')
     else:
         form = CategoriaForm()
     return render(request, 'gerencia/criar_categoria.html', {'form': form})
 
 @login_required
-def editar_categoria(request, id):
+def edicao_categoria(request, id):
     categoria = get_object_or_404(Categoria, id=id)
     if request.method == 'POST':
         form = CategoriaForm(request.POST, instance=categoria)
         if form.is_valid():
             form.save()
-            return redirect('gerencia:listar_categorias')
+            return redirect('gerencia:listagem_categorias')
     else:
         form = CategoriaForm(instance=categoria)
-    return render(request, 'gerencia/editar_categoria.html', {'form': form})
+    return render(request, 'gerencia/edicao_categoria.html', {'form': form})
 
 @login_required
 def deletar_categoria(request, id):
     categoria = get_object_or_404(Categoria, id=id)
     if request.method == 'POST':
         categoria.delete()
-        return redirect('gerencia:listar_categorias')
+        return redirect('gerencia:listagem_categorias')
     return render(request, 'gerencia/deletar_categoria.html', {'categoria': categoria})

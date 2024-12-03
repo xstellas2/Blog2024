@@ -1,7 +1,11 @@
-{% extends 'base_gerencia.html' %} {% block main %}
-<h2>Editar Categoria</h2>
+{% extends 'base_gerencia.html' %} 
+{% block main %}
+
+<h2>edicao_noticia Categoria</h2>
+
 <form method="post">
   {% csrf_token %} {{ form.as_p }}
   <button type="submit">Salvar</button>
 </form>
+
 {% endblock %}

@@ -4,7 +4,7 @@
 
      <!-- Page Heading -->
      <h1 class="h3 mb-2 text-gray-800">Gerenciar Usuários</h1>
-     <p class="mb-4">Aqui você pode editar ou remover as notícias existentes.</p>
+     <p class="mb-4">Aqui você pode edicao_noticia ou remover as notícias existentes.</p>
 
    
 
@@ -35,7 +35,7 @@
                                  {% endfor %}
                              </td>
                              <td class="text-end">
-                                <a href="{% url 'usuarios:editar_usuario' usuario.id %}" class="btn btn-warning btn-sm me-2">Editar</a>
+                                <a href="{% url 'usuarios:edicao_noticia_usuario' usuario.id %}" class="btn btn-warning btn-sm me-2">edicao_noticia</a>
                                 <form action="#" method="POST" class="d-inline">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-danger btn-sm">Remover</button>
